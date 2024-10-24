@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Entity\Team;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,19 +11,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends AbstractController
 {
-    #[Route('/', name: 'index')]
-    public function index(ManagerRegistry $doctrine): Response
-    {
-        $repository = $doctrine->getRepository(Team::class);
-        $team = $repository->findAll();
-        return $this->render('page/index.html.twig', compact('team'));
-    }
+// --- RUTAS A PÁGINAS =============================0
 
+    #[Route('/', name: 'index')]
+    public function index(): Response
+    {
+        return $this->render('page/index.html.twig');
+    }
 
     #[Route('/about', name: 'about')]
     public function about(): Response
     {
-        return $this->render('page/about.html.twig', []);
+        return $this->render('page/about.html.twig');
     }
 
     #[Route('/service', name: 'service')]
@@ -55,4 +55,17 @@ class PageController extends AbstractController
         return $this->render('page/contact.html.twig', []);
     }
 
+// --- METODOS NORMALES ==================================00
+    public function teamTemplate(ManagerRegistry $doctrine): Response
+    {
+        $repository = $doctrine->getRepository(Team::class);
+        $team = $repository->findAll();
+        return $this->render('partials/_team.html.twig',compact('team'));
+    }
+    public function productsTemplate(ManagerRegistry $doctrine): Response
+    {
+        $repository = $doctrine->getRepository(Product::class);
+        $product = $repository->findAll();
+        return $this->render('partials/_product.html.twig',compact('product'));
+    }
 }
