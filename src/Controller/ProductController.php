@@ -15,4 +15,11 @@ class ProductController extends AbstractController
         $products = $productsService->getProducts();
         return $this->render('product/product.html.twig', compact('products'));
     }
+    #[Route('/manolo', name: 'manolo')]
+    public function manolo(ProductsService $productsService): Response
+    {
+        $products = $productsService->getProducts();
+        return $this->render('product/product.html.twig', compact('products'));
+    }
+
 }
